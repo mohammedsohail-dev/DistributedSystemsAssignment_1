@@ -224,7 +224,7 @@ else{
 	if( artist == null | tracktitle ==null | albumtitle==null | tracknumber == null | year== null | numberofreviews==null | numberofcopiessold==null)
 	{
 		response.setStatus(400);
-		response.getOutputStream().println("Data was notSend complete data");
+		response.getOutputStream().println("Data was not posted, send complete data");
 	
 	}
 	else{

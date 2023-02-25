@@ -83,6 +83,8 @@ class post extends Thread{
 
 class TestGet {
 
+    
+
 	public static void testSongsGet() throws Exception {
 
 		String url = "http://204.216.109.29:8080/coen6317/songs";
@@ -108,6 +110,7 @@ class TestGet {
 
 
 class TestPost {
+
 
    
 /// do get and do post for random gen data
@@ -141,13 +144,13 @@ class TestPost {
 
 
 
-public class AudioClientTest{
+class AudioClientTest{
 
 
     
 
     @Test
-    public static void main(String[] args) throws Exception{
+    void main() throws Exception{
         long begin = System.currentTimeMillis();  
 
    
@@ -195,3 +198,4 @@ System.out.println(dt);
 
 
 }
+

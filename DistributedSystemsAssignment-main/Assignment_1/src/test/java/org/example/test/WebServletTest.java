@@ -27,13 +27,13 @@ import org.example.model.Artist;
 
 class WebServletTest {
 
-	//@Test
+	@Test
 	void testHelloServletGet() throws Exception {
 		
 		HttpClient client = new HttpClient();
         client.start();
 
-        ContentResponse res = client.GET("http://localhost:9090/coen6317/HelloServlet");
+        ContentResponse res = client.GET("http://204.216.109.29:8080/coen6317/HelloServlet");
         
         System.out.println(res.getContentAsString());
         
@@ -42,13 +42,13 @@ class WebServletTest {
 	}
 	
 	
-	//@Test
+	@Test
 	void testBlockingServletGet() throws Exception {
 		
 		HttpClient client = new HttpClient();
         client.start();
 
-        ContentResponse res = client.GET("http://localhost:9090/coen6317/BlockingServlet");
+        ContentResponse res = client.GET("http://204.216.109.29:8080/coen6317/BlockingServlet");
         
         System.out.println(res.getContentAsString());
         
@@ -56,10 +56,10 @@ class WebServletTest {
 		
 	}
 	
-	//@Test
+	@Test
 	void testAsyncServletGet() throws Exception {
 		
-		String url = "http://localhost:9090/coen6317/longtask";
+		String url = "http://204.216.109.29:8080/coen6317/longtask";
 		HttpClient client = new HttpClient();
         client.start();
 
@@ -77,7 +77,7 @@ class WebServletTest {
 	
 	@Test
 	void testArtistsGet() throws Exception {
-		String url = "http://localhost:9090/coen6317/artists";
+		String url = "http://204.216.109.29:8080/coen6317/artists";
 		HttpClient client = new HttpClient();
         client.start();
 
@@ -99,7 +99,7 @@ class WebServletTest {
 	@Test
 	void testArtistsPost() throws Exception {
 		
-		String url = "http://localhost:9090/coen6317/artists";
+		String url = "http://204.216.109.29:8080/coen6317/artists";
 		HttpClient client = new HttpClient();
         client.start();
         

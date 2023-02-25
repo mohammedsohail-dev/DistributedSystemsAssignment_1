@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-//@WebServlet(name = "skiiers", value = "skiiers")
+
 @WebServlet( name = "songs", value = "songs")
 public class AudioResourceServlet extends HttpServlet {
     
@@ -64,16 +64,15 @@ public class AudioResourceServlet extends HttpServlet {
 	
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
         
 		String id = request.getParameter("id");
 
+	
+
+		
+
 
 		List<String> idList = new ArrayList<>(songDB.keySet());
-		
-		
 
 		
 		 if(idList.contains(id))
@@ -92,7 +91,7 @@ public class AudioResourceServlet extends HttpServlet {
     
 		
 	    Gson gson = new Gson();
-	    JsonElement element = gson.toJsonTree(songDB);
+	    
 	    
 	    /*
 	     * response in normal string message;
@@ -108,22 +107,19 @@ public class AudioResourceServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        out.println(gson.toJson(songdetails));
+        out.println("GET RESPONSE IN JSON - single element " + gson.toJson(songdetails));
         
-        out.println(element.toString());
+        //out.println("GET RESPONSE IN JSON - all elements " + element.toString());
      
         out.flush();   
 		 }
 		 else{
 			if( id== null){
 				Gson gson = new Gson();
-				JsonElement element = gson.toJsonTree(songDB);
 				PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        out.println( gson.toJson(songDB));
-        
-        out.println( element.toString());
+        out.println("GET RESPONSE IN JSON - all elements " + gson.toJson(songDB));
      
         out.flush();  
 
@@ -132,15 +128,15 @@ public class AudioResourceServlet extends HttpServlet {
 			response.setStatus(400);
 
 			PrintWriter out = response.getWriter();
-        response.setContentType("application/json");
+        response.setContentType("application/string");
         response.setCharacterEncoding("UTF-8");
         
         out.println("Id doesnt exist in the database");
 
 
-			 } }
+		 			 }			 } }
 	
-	}
+	
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -216,7 +212,7 @@ else{
 	songDB.put(id, songdetailstemp);
 	response.setStatus(200);
 	
-	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " is puted to the database.");
+	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " is added to the database.");
 }
 
 
@@ -228,7 +224,7 @@ else{
 	if( artist == null | tracktitle ==null | albumtitle==null | tracknumber == null | year== null | numberofreviews==null | numberofcopiessold==null)
 	{
 		response.setStatus(400);
-		response.getOutputStream().println("Send complete data");
+		response.getOutputStream().println("Data was notSend complete data");
 	
 	}
 	else{
@@ -244,7 +240,7 @@ else{
 		songDB.put(id, songdetailstemp);
 	    response.setStatus(200);
 	
-	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " is puted to the database.");
+	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " was added to the database.");
 
 
 
@@ -258,4 +254,3 @@ else{
 	}
 }
 }
-

@@ -128,7 +128,7 @@ public class AudioResourceServlet extends HttpServlet {
 			response.setStatus(400);
 
 			PrintWriter out = response.getWriter();
-        response.setContentType("application/string");
+        response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         
         out.println("Id doesnt exist in the database");

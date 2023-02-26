@@ -46,7 +46,7 @@ class get extends Thread{
 @Override 
    public void run(){
     
-for(int i=0;i<=2;i++){                             ///change the ratio of gets here if 2:1, put 2, 5:1 put 5
+for(int i=0;i<=5;i++){                             ///change the ratio of gets here if 2:1, put 2, 5:1 put 5
     try {
         TestGet.testSongsGet();
     } catch (Exception e) {
@@ -92,7 +92,14 @@ class TestGet {
         client.start();
 
         Request request = client.newRequest(url);
-        request.param("id","id_1");
+
+        int min=1;
+        int max=500;
+
+        Random random = new Random();
+        int randomNumber=random.nextInt(max-min+1)+min;
+        
+        request.param("id","id_"+randomNumber);
         ContentResponse response = request.send();
    
 
@@ -121,8 +128,15 @@ class TestPost {
         client.start();
         
         Request request = client.POST(url);
+
+
+        int min=1;
+        int max=500;
+
+        Random random = new Random();
+        int randomNumber=random.nextInt(max-min+1)+min;
         
-        request.param("id","id_1");
+        request.param("id","id_"+randomNumber);
         request.param("artist","artist");
         request.param("tracktitle","tracktitle");
 		request.param("albumtitle","albumtitle");
@@ -150,7 +164,7 @@ class AudioClientTest{
     
 
     @Test
-    void main() throws Exception{
+    public static void main( String arg [] ) throws Exception{
         long begin = System.currentTimeMillis();  
 
    
@@ -176,7 +190,7 @@ class AudioClientTest{
         
 long dt = end - begin;
 
-System.out.println(dt);
+System.out.println(dt+"ms");
 
   
 
@@ -198,4 +212,3 @@ System.out.println(dt);
 
 
 }
-

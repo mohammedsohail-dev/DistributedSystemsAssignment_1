@@ -119,7 +119,7 @@ public class AudioResourceServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        out.println(gson.toJson(songdetails));
+        out.println("GET Response" + gson.toJson(songdetails));
         
         //out.println(element.toString());
      
@@ -238,7 +238,7 @@ else{
 	songDB.put(id, songdetailstemp);
 	response.setStatus(200);
 	
-	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " is puted to the database.");
+	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " was added to the database.");
 }
 
 

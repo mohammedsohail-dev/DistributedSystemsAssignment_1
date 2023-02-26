@@ -121,7 +121,7 @@ public class AudioResourceServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         out.println(gson.toJson(songdetails));
         
-        out.println(element.toString());
+        //out.println(element.toString());
      
         out.flush();   
 		 }
@@ -134,7 +134,7 @@ public class AudioResourceServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         out.println( gson.toJson(songDB));
         
-        out.println( element.toString());
+        //out.println( element.toString());
      
         out.flush();  
 

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
-
+//@WebServlet(name = "skiiers", value = "skiiers")
 @WebServlet( name = "songs", value = "songs")
 public class AudioResourceServlet extends HttpServlet {
     
@@ -46,7 +46,7 @@ public class AudioResourceServlet extends HttpServlet {
         SongDetails.put("Tracknumber", "Tracknumber");
 		SongDetails.put("Year", "Year");
 		SongDetails.put("NumberOfReviews","NumberOfReviews");
-        SongDetails.put("NumberOfCopiesSold","NumberOfCopiesSold");
+        SongDetails.put("NumberOfCopiesSold","10");
 
 
 
@@ -64,15 +64,16 @@ public class AudioResourceServlet extends HttpServlet {
 	
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
         
 		String id = request.getParameter("id");
 
-	
-
-		
-
 
 		List<String> idList = new ArrayList<>(songDB.keySet());
+		
+		
 
 		
 		 if(idList.contains(id))
@@ -87,11 +88,22 @@ public class AudioResourceServlet extends HttpServlet {
         songdetails.setTrackNumber(Details.get("Tracknumber"));
         songdetails.setYear(Details.get("Year"));
         songdetails.setNumberOfReviews(Details.get("NumberOfReviews"));
-        songdetails.setNumberOfCopiesSold(Details.get("NumberOfCopiesSold"));
+        
+        int k=0;
+		for(int i=0;i<idList.size();i++)
+		{   
+			
+			ConcurrentHashMap<String, String> Details1 = songDB.get(idList.get(i));
+			k= Integer.parseInt(Details1.get("NumberOfCopiesSold")) +k ;
+			
+		}
+        songdetails.setNumberOfCopiesSold(Integer.toString(k));
+        
+        //songdetails.setNumberOfCopiesSold(Details.get("NumberOfCopiesSold"));
     
 		
 	    Gson gson = new Gson();
-	    
+	    JsonElement element = gson.toJsonTree(songDB);
 	    
 	    /*
 	     * response in normal string message;
@@ -107,19 +119,22 @@ public class AudioResourceServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        out.println("GET RESPONSE IN JSON - single element " + gson.toJson(songdetails));
+        out.println(gson.toJson(songdetails));
         
-        //out.println("GET RESPONSE IN JSON - all elements " + element.toString());
+        out.println(element.toString());
      
         out.flush();   
 		 }
 		 else{
 			if( id== null){
 				Gson gson = new Gson();
+				JsonElement element = gson.toJsonTree(songDB);
 				PrintWriter out = response.getWriter();
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        out.println("GET RESPONSE IN JSON - all elements " + gson.toJson(songDB));
+        out.println( gson.toJson(songDB));
+        
+        out.println( element.toString());
      
         out.flush();  
 
@@ -134,9 +149,9 @@ public class AudioResourceServlet extends HttpServlet {
         out.println("Id doesnt exist in the database");
 
 
-		 			 }			 } }
+			 } }
 	
-	
+	}
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -150,6 +165,17 @@ public class AudioResourceServlet extends HttpServlet {
         String year = request.getParameter("year");
         String numberofreviews = request.getParameter("numberofreviews");
         String numberofcopiessold = request.getParameter("numberofcopiessold");
+        
+        boolean numeric = true;
+
+        try {
+            Double num = Double.parseDouble(numberofcopiessold);
+        } catch (NumberFormatException e) {
+            numeric = false;
+        }
+
+if(numeric)
+{
 
         ConcurrentHashMap<String,String> songdetailstemp = new ConcurrentHashMap<String,String>();
         List<String> idList = new ArrayList<>(songDB.keySet());
@@ -212,7 +238,7 @@ else{
 	songDB.put(id, songdetailstemp);
 	response.setStatus(200);
 	
-	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " is added to the database.");
+	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " is puted to the database.");
 }
 
 
@@ -224,7 +250,7 @@ else{
 	if( artist == null | tracktitle ==null | albumtitle==null | tracknumber == null | year== null | numberofreviews==null | numberofcopiessold==null)
 	{
 		response.setStatus(400);
-		response.getOutputStream().println("Data was not posted, send complete data");
+		response.getOutputStream().println("Send complete data");
 	
 	}
 	else{
@@ -240,17 +266,27 @@ else{
 		songDB.put(id, songdetailstemp);
 	    response.setStatus(200);
 	
-	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " was added to the database.");
+	response.getOutputStream().println("POST RESPONSE: Artist " + songdetailstemp + " is puted to the database.");
 
 
 
+
+
+
+	}}
+		
 
 
 
 	}
+else{
+	response.setStatus(400);
+		response.getOutputStream().println("Put numeric value for Number of copies sold");
 
-
-
-	}
 }
+
+    }
+  
+    
+    
 }
